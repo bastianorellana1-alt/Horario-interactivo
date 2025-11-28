@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Mi Malla Curricular</title>
+    <link rel="stylesheet" href="style.css?v=3.6">
+</head>
+<body>
+    <!-- Controles de Edición -->
+    <div id="edit-controls">
+        <button id="toggle-edit-btn">Editar Malla</button>
+        <button id="design-btn">🎨 Diseño</button>
+        <button id="reset-btn">Reiniciar Todo</button>
+    </div>
+
+    <!-- Panel de Diseño -->
+    <div id="design-panel" class="hidden">
+        <div class="design-panel-header">
+            <h2>🎨 Personalizar Diseño</h2>
+            <button id="close-design-btn">✕</button>
+        </div>
+        <div class="design-panel-content">
+            <!-- Fondo General -->
+            <div class="design-section">
+                <h3>Fondo de Página</h3>
+                <label>
+                    Imagen de Fondo (Contenedor):
+                    <input type="file" id="bg-image" accept="image/*">
+                </label>
+                <label>
+                    Ajuste de Imagen:
+                    <select id="bg-image-size">
+                        <option value="cover">Rellenar (Cover)</option>
+                        <option value="contain">Ajustar (Contain)</option>
+                        <option value="auto">Tamaño Original</option>
+                        <option value="100% 100%">Estirar</option>
+                    </select>
+                </label>
+                <label>
+                    Opacidad de Imagen:
+                    <input type="range" id="bg-image-opacity" min="0" max="100" value="100" step="5">
+                    <span id="bg-image-opacity-value">100%</span>
+                </label>
+                <button id="remove-bg-image" class="small-btn">Quitar Imagen</button>
+                <label>
+                    Color de Fondo:
+                    <input type="color" id="bg-color" value="#667eea">
+                </label>
+                <label>
+                    Color Secundario:
+                    <input type="color" id="bg-color-2" value="#764ba2">
+                </label>
+                <label>
+                    <input type="checkbox" id="bg-gradient">
+                    Usar Gradiente
+                </label>
+            </div>
+
+            <!-- Título -->
+            <div class="design-section">
+                <h3>Título Principal</h3>
+                <label>
+                    Color del Título:
+                    <input type="color" id="title-color" value="#667eea">
+                </label>
+                <label>
+                    Tamaño:
+                    <input type="range" id="title-size" min="20" max="60" value="36" step="2">
+                    <span id="title-size-value">36px</span>
+                </label>
+                <label>
+                    Fuente:
+                    <select id="title-font">
+                        <option value="'Segoe UI', sans-serif">Segoe UI</option>
+                        <option value="'Arial', sans-serif">Arial</option>
+                        <option value="'Georgia', serif">Georgia</option>
+                        <option value="'Courier New', monospace">Courier New</option>
+                        <option value="'Comic Sans MS', cursive">Comic Sans</option>
+                        <option value="'Impact', fantasy">Impact</option>
+                    </select>
+                </label>
+            </div>
+
+            <!-- Encabezados de Semestre -->
+            <div class="design-section">
+                <h3>Encabezados de Semestre</h3>
+                <label>
+                    Color de Fondo:
+                    <input type="color" id="header-bg" value="#667eea">
+                </label>
+                <label>
+                    Color de Texto:
+                    <input type="color" id="header-text" value="#ffffff">
+                </label>
+                <label>
+                    Borde Redondeado:
+                    <input type="range" id="header-radius" min="0" max="30" value="12">
+                    <span id="header-radius-value">12px</span>
+                </label>
+            </div>
+
+            <!-- Cursos -->
+            <div class="design-section">
+                <h3>Cursos</h3>
+                <label>
+                    Color de Fondo:
+                    <input type="color" id="course-bg" value="#f8f9fa">
+                </label>
+                <label>
+                    Color de Borde:
+                    <input type="color" id="course-border" value="#e9ecef">
+                </label>
+                <label>
+                    Color de Texto:
+                    <input type="color" id="course-text" value="#495057">
+                </label>
+                <label>
+                    Borde Redondeado:
+                    <input type="range" id="course-radius" min="0" max="30" value="12">
+                    <span id="course-radius-value">12px</span>
+                </label>
+            </div>
+
+            <!-- Cursos Desbloqueados -->
+            <div class="design-section">
+                <h3>Cursos Desbloqueados</h3>
+                <label>
+                    Color de Borde:
+                    <input type="color" id="unlocked-border" value="#667eea">
+                </label>
+                <label>
+                    Color de Fondo:
+                    <input type="color" id="unlocked-bg" value="#ffffff">
+                </label>
+            </div>
+
+            <!-- Cursos Completados -->
+            <div class="design-section">
+                <h3>Cursos Completados</h3>
+                <label>
+                    Color de Fondo:
+                    <input type="color" id="completed-bg" value="#d4edda">
+                </label>
+                <label>
+                    Color de Borde:
+                    <input type="color" id="completed-border" value="#28a745">
+                </label>
+                <label>
+                    Color de Texto:
+                    <input type="color" id="completed-text" value="#155724">
+                </label>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="design-section">
+                <button id="reset-design-btn" class="secondary-btn">Restaurar Diseño Original</button>
+                <button id="save-design-btn" class="primary-btn">Guardar Diseño</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="curriculum-container">
+        <h1 contenteditable="true" id="curriculum-title">Mi Malla Curricular</h1>
+        
+        <div id="semesters-grid">
+            <div class="semester-column">
+                <div class="row-header">Semestre I</div>
+                <div class="curriculum-row">
+                    <div class="course" data-id="s1-c1" data-prerequisites="" data-grade="">
+                        <h3>Curso 1.1</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s1-c2" data-prerequisites="" data-grade="">
+                        <h3>Curso 1.2</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s1-c3" data-prerequisites="" data-grade="">
+                        <h3>Curso 1.3</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s1-c4" data-prerequisites="" data-grade="">
+                        <h3>Curso 1.4</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s1-c5" data-prerequisites="" data-grade="">
+                        <h3>Curso 1.5</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s1-c6" data-prerequisites="" data-grade="">
+                        <h3>Curso 1.6</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="semester-column">
+                <div class="row-header">Semestre II</div>
+                <div class="curriculum-row">
+                    <div class="course" data-id="s2-c1" data-prerequisites="" data-grade="">
+                        <h3>Curso 2.1</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s2-c2" data-prerequisites="" data-grade="">
+                        <h3>Curso 2.2</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s2-c3" data-prerequisites="" data-grade="">
+                        <h3>Curso 2.3</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s2-c4" data-prerequisites="" data-grade="">
+                        <h3>Curso 2.4</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s2-c5" data-prerequisites="" data-grade="">
+                        <h3>Curso 2.5</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s2-c6" data-prerequisites="" data-grade="">
+                        <h3>Curso 2.6</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="semester-column">
+                <div class="row-header">Semestre III</div>
+                <div class="curriculum-row">
+                    <div class="course" data-id="s3-c1" data-prerequisites="" data-grade="">
+                        <h3>Curso 3.1</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s3-c2" data-prerequisites="" data-grade="">
+                        <h3>Curso 3.2</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s3-c3" data-prerequisites="" data-grade="">
+                        <h3>Curso 3.3</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s3-c4" data-prerequisites="" data-grade="">
+                        <h3>Curso 3.4</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s3-c5" data-prerequisites="" data-grade="">
+                        <h3>Curso 3.5</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s3-c6" data-prerequisites="" data-grade="">
+                        <h3>Curso 3.6</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="semester-column">
+                <div class="row-header">Semestre IV</div>
+                <div class="curriculum-row">
+                    <div class="course" data-id="s4-c1" data-prerequisites="" data-grade="">
+                        <h3>Curso 4.1</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s4-c2" data-prerequisites="" data-grade="">
+                        <h3>Curso 4.2</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s4-c3" data-prerequisites="" data-grade="">
+                        <h3>Curso 4.3</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s4-c4" data-prerequisites="" data-grade="">
+                        <h3>Curso 4.4</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s4-c5" data-prerequisites="" data-grade="">
+                        <h3>Curso 4.5</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s4-c6" data-prerequisites="" data-grade="">
+                        <h3>Curso 4.6</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="semester-column">
+                <div class="row-header">Semestre V</div>
+                <div class="curriculum-row">
+                    <div class="course" data-id="s5-c1" data-prerequisites="" data-grade="">
+                        <h3>Curso 5.1</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s5-c2" data-prerequisites="" data-grade="">
+                        <h3>Curso 5.2</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s5-c3" data-prerequisites="" data-grade="">
+                        <h3>Curso 5.3</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s5-c4" data-prerequisites="" data-grade="">
+                        <h3>Curso 5.4</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s5-c5" data-prerequisites="" data-grade="">
+                        <h3>Curso 5.5</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s5-c6" data-prerequisites="" data-grade="">
+                        <h3>Curso 5.6</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="semester-column">
+                <div class="row-header">Semestre VI</div>
+                <div class="curriculum-row">
+                    <div class="course" data-id="s6-c1" data-prerequisites="" data-grade="">
+                        <h3>Curso 6.1</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s6-c2" data-prerequisites="" data-grade="">
+                        <h3>Curso 6.2</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s6-c3" data-prerequisites="" data-grade="">
+                        <h3>Curso 6.3</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s6-c4" data-prerequisites="" data-grade="">
+                        <h3>Curso 6.4</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s6-c5" data-prerequisites="" data-grade="">
+                        <h3>Curso 6.5</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s6-c6" data-prerequisites="" data-grade="">
+                        <h3>Curso 6.6</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="semester-column">
+                <div class="row-header">Semestre VII</div>
+                <div class="curriculum-row">
+                    <div class="course" data-id="s7-c1" data-prerequisites="" data-grade="">
+                        <h3>Curso 7.1</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s7-c2" data-prerequisites="" data-grade="">
+                        <h3>Curso 7.2</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s7-c3" data-prerequisites="" data-grade="">
+                        <h3>Curso 7.3</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s7-c4" data-prerequisites="" data-grade="">
+                        <h3>Curso 7.4</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s7-c5" data-prerequisites="" data-grade="">
+                        <h3>Curso 7.5</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s7-c6" data-prerequisites="" data-grade="">
+                        <h3>Curso 7.6</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="semester-column">
+                <div class="row-header">Semestre VIII</div>
+                <div class="curriculum-row">
+                    <div class="course" data-id="s8-c1" data-prerequisites="" data-grade="">
+                        <h3>Curso 8.1</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s8-c2" data-prerequisites="" data-grade="">
+                        <h3>Curso 8.2</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s8-c3" data-prerequisites="" data-grade="">
+                        <h3>Curso 8.3</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s8-c4" data-prerequisites="" data-grade="">
+                        <h3>Curso 8.4</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s8-c5" data-prerequisites="" data-grade="">
+                        <h3>Curso 8.5</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="semester-column">
+                <div class="row-header">Semestre IX</div>
+                <div class="curriculum-row">
+                    <div class="course" data-id="s9-c1" data-prerequisites="" data-grade="">
+                        <h3>Curso 9.1</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s9-c2" data-prerequisites="" data-grade="">
+                        <h3>Curso 9.2</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="semester-column">
+                <div class="row-header">Semestre X</div>
+                <div class="curriculum-row">
+                    <div class="course" data-id="s10-c1" data-prerequisites="" data-grade="">
+                        <h3>Curso 10.1</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                    <div class="course" data-id="s10-c2" data-prerequisites="" data-grade="">
+                        <h3>Curso 10.2</h3>
+                        <span class="course-grade"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/logic.js?v=3.3"></script>
+    <script src="js/edit.js?v=3.2"></script>
+    <script src="js/design.js?v=3.7"></script>
+</body>
+</html>

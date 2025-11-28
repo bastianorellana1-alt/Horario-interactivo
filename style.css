@@ -1,0 +1,949 @@
+/* ===== VARIABLES CSS PERSONALIZABLES ===== */
+:root {
+    --bg-color: #667eea;
+    --bg-color-2: #764ba2;
+    --title-color: #667eea;
+    --title-size: 36px;
+    --title-font: 'Segoe UI', sans-serif;
+    --header-bg: #667eea;
+    --header-text: #ffffff;
+    --header-radius: 12px;
+    --course-bg: #f8f9fa;
+    --course-border: #e9ecef;
+    --course-text: #495057;
+    --course-radius: 12px;
+    --unlocked-border: #667eea;
+    --unlocked-bg: #ffffff;
+    --completed-bg: #d4edda;
+    --completed-border: #28a745;
+    --completed-text: #155724;
+}
+
+/* ===== ESTILOS BASE ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-color-2) 100%);
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+    transition: background 0.5s ease;
+}
+
+/* ===== CONTROLES DE EDICIÓN ===== */
+#edit-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 12px 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    flex-wrap: wrap;
+}
+
+#edit-controls button {
+    padding: 10px 20px;
+    font-size: 0.95em;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#toggle-edit-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+#toggle-edit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#design-btn {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+#design-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#reset-btn {
+    background: #ff6b6b;
+    color: white;
+}
+
+#reset-btn:hover {
+    background: #ee5a52;
+    transform: translateY(-2px);
+}
+
+/* ===== PANEL DE DISEÑO ===== */
+#design-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 100vh;
+    background: white;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+}
+
+#design-panel.show {
+    transform: translateX(0);
+}
+
+.hidden {
+    display: none;
+}
+
+.design-panel-header {
+    position: sticky;
+    top: 0;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.design-panel-header h2 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+#close-design-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    line-height: 1;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+#close-design-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.design-panel-content {
+    padding: 20px;
+}
+
+.design-section {
+    background: #f8f9fa;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.design-section h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #495057;
+    font-size: 1.1em;
+    border-bottom: 2px solid #dee2e6;
+    padding-bottom: 10px;
+}
+
+.design-section label {
+    display: block;
+    margin-bottom: 15px;
+    color: #495057;
+    font-weight: 500;
+}
+
+.design-section input[type="color"] {
+    width: 60px;
+    height: 40px;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.design-section input[type="range"] {
+    width: 150px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.design-section select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 0.95em;
+}
+
+.design-section input[type="checkbox"] {
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.design-section input[type="file"] {
+    padding: 8px;
+    border: 2px dashed #667eea;
+    border-radius: 8px;
+    background: #f8f9fa;
+    cursor: pointer;
+    width: 100%;
+}
+
+.small-btn {
+    background: #dc3545;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85em;
+    cursor: pointer;
+    margin: 8px 0;
+    transition: all 0.3s ease;
+}
+
+.small-btn:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.secondary-btn {
+    background: #6c757d;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.secondary-btn:hover {
+    background: #5a6268;
+}
+
+/* ===== CONTENEDOR PRINCIPAL ===== */
+#curriculum-container {
+    max-width: 100%;
+    margin: 80px auto 40px;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    position: relative;
+}
+
+.bg-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    border-radius: 20px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+#curriculum-container > * {
+    position: relative;
+    z-index: 1;
+}
+
+#curriculum-title {
+    text-align: center;
+    color: var(--title-color);
+    font-size: var(--title-size);
+    font-family: var(--title-font);
+    font-weight: 700;
+    margin-bottom: 30px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#curriculum-title:focus {
+    opacity: 0.8;
+}
+
+/* ===== GRID DE SEMESTRES ===== */
+#semesters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    width: 100%;
+}
+
+.semester-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.row-header {
+    background: var(--header-bg);
+    color: var(--header-text);
+    border-radius: var(--header-radius);
+    padding: 15px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.1em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.curriculum-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ===== ESTILOS DE CURSO ===== */
+.course {
+    background: var(--course-bg);
+    border: 2px solid var(--course-border);
+    border-radius: var(--course-radius);
+    padding: 15px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.course h3 {
+    font-size: 1em;
+    color: var(--course-text);
+    margin-bottom: 8px;
+    word-wrap: break-word;
+    max-width: 100%;
+}
+
+.course-grade {
+    font-size: 0.85em;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+/* ===== ESTADOS DEL CURSO ===== */
+.course.unlocked {
+    border-color: var(--unlocked-border);
+    background: var(--unlocked-bg);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.course.unlocked:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+.course.completed {
+    background: var(--completed-bg);
+    border-color: var(--completed-border);
+    color: var(--completed-text);
+}
+
+.course.completed h3 {
+    color: var(--completed-text);
+}
+
+.course.completed::before {
+    content: '';
+    position: absolute;
+    width: 70%;
+    height: 3px;
+    background: var(--completed-text);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg) scaleX(0);
+    transition: transform 0.4s ease;
+    z-index: 1;
+}
+
+.course.completed.strike::before {
+    transform: translate(-50%, -50%) rotate(-45deg) scaleX(1);
+}
+
+/* ===== MODO EDICIÓN ===== */
+body.editing .course {
+    background: #fff8dc;
+    border-color: #ffc107;
+    cursor: pointer;
+    position: relative;
+}
+
+body.editing .course::after {
+    content: '✏️';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 1.2em;
+    opacity: 0.6;
+}
+
+body.editing .course:hover {
+    border-color: #ff9800;
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.course.editable-mode {
+    border: 2px dashed #ffc107 !important;
+}
+
+.editing-title {
+    outline: 2px dashed #667eea;
+    outline-offset: 4px;
+    border-radius: 8px;
+}
+
+/* ===== MODAL DE EDICIÓN ===== */
+.edit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.edit-modal.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.edit-modal.hidden {
+    display: none !important;
+    pointer-events: none;
+}
+
+.edit-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+}
+
+.edit-modal-content {
+    position: relative;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 600px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.edit-modal.show .edit-modal-content {
+    transform: scale(1);
+}
+
+.edit-modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px 24px;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-modal-header h2 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.close-modal-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.close-modal-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.edit-modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.edit-field {
+    margin-bottom: 24px;
+}
+
+.edit-field label {
+    display: block;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 8px;
+    font-size: 1.05em;
+}
+
+.edit-field input[type="text"] {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.edit-field input[type="text"]:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.prereq-info {
+    font-size: 0.9em;
+    color: #6c757d;
+    margin-bottom: 12px;
+    font-style: italic;
+}
+
+/* Buscador de prerrequisitos */
+.prereq-search {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 1em;
+    margin-bottom: 12px;
+    transition: border-color 0.3s ease;
+}
+
+.prereq-search:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Prerrequisitos seleccionados (tags) */
+.selected-prereqs {
+    min-height: 50px;
+    padding: 12px;
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.no-prereqs {
+    color: #adb5bd;
+    font-style: italic;
+    width: 100%;
+    text-align: center;
+    padding: 8px 0;
+}
+
+.prereq-tag {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9em;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.prereq-tag span {
+    font-weight: 500;
+}
+
+.prereq-tag .remove-prereq {
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    color: white;
+    font-size: 1.3em;
+    line-height: 1;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+    padding: 0;
+}
+
+.prereq-tag .remove-prereq:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Cursos disponibles */
+.available-courses {
+    max-height: 250px;
+    overflow-y: auto;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    background: white;
+}
+
+.semester-group-header {
+    background: #e9ecef;
+    padding: 8px 12px;
+    font-weight: 700;
+    color: #495057;
+    font-size: 0.9em;
+    border-bottom: 1px solid #dee2e6;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.course-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #f1f3f5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.course-item:last-child {
+    border-bottom: none;
+}
+
+.course-item:hover {
+    background: linear-gradient(90deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    padding-left: 20px;
+}
+
+.course-item-name {
+    font-weight: 500;
+    color: #495057;
+    flex: 1;
+}
+
+.course-item-id {
+    font-size: 0.85em;
+    color: #adb5bd;
+    font-family: 'Courier New', monospace;
+}
+
+.no-results {
+    padding: 24px;
+    text-align: center;
+    color: #adb5bd;
+    font-style: italic;
+}
+
+.edit-modal-footer {
+    padding: 20px 24px;
+    border-top: 1px solid #dee2e6;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.modal-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-btn.primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.modal-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.modal-btn.secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.modal-btn.secondary:hover {
+    background: #5a6268;
+}
+
+/* Responsive Modal */
+@media (max-width: 768px) {
+    .edit-modal-content {
+        width: 95%;
+        max-height: 90vh;
+    }
+    
+    .edit-modal-header {
+        padding: 16px 20px;
+    }
+    
+    .edit-modal-header h2 {
+        font-size: 1.3em;
+    }
+    
+    .edit-modal-body {
+        padding: 20px;
+    }
+    
+    .modal-btn {
+        padding: 10px 20px;
+        font-size: 0.95em;
+    }
+}
+
+/* ===== INPUT PARA NOTAS ===== */
+.course input[type="text"] {
+    width: 80px;
+    padding: 4px 8px;
+    border: 2px solid #667eea;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+
+.course input[type="text"]:focus {
+    outline: none;
+    border-color: #764ba2;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    #curriculum-container {
+        padding: 20px;
+        margin-top: 100px;
+    }
+
+    #semesters-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
+
+    #edit-controls {
+        flex-direction: column;
+        top: 10px;
+        right: 10px;
+    }
+
+    .course {
+        min-height: 90px;
+    }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    #curriculum-container {
+        margin-top: 120px;
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    #design-panel {
+        width: 100%;
+    }
+
+    #curriculum-title {
+        font-size: calc(var(--title-size) * 0.6);
+        margin-bottom: 20px;
+    }
+
+    #semesters-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    #edit-controls {
+        position: fixed;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        right: auto;
+        flex-direction: row;
+        gap: 8px;
+        padding: 10px;
+    }
+
+    #edit-controls button {
+        padding: 8px 12px;
+        font-size: 0.85em;
+    }
+
+    .row-header {
+        font-size: 1em;
+        padding: 12px;
+    }
+
+    .course {
+        min-height: 80px;
+        padding: 12px;
+    }
+
+    .course h3 {
+        font-size: 0.95em;
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+    #curriculum-container {
+        margin-top: 100px;
+        padding: 10px;
+    }
+
+    #curriculum-title {
+        font-size: calc(var(--title-size) * 0.5);
+    }
+
+    #edit-controls {
+        flex-direction: column;
+        gap: 5px;
+        padding: 8px;
+    }
+
+    #edit-controls button {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+
+    .course {
+        min-height: 70px;
+        padding: 10px;
+    }
+
+    .course h3 {
+        font-size: 0.9em;
+    }
+
+    .course-grade {
+        font-size: 0.75em;
+    }
+}
+
+/* Landscape móvil */
+@media (max-width: 896px) and (orientation: landscape) {
+    #curriculum-container {
+        margin-top: 80px;
+    }
+
+    #semesters-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+/* Mejoras de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
